@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PrimaryButton from "../../../components/buttons/PrimaryButton";
+import SecondaryButton from "../../../components/buttons/SecondaryButton";
 
 type RegisterData = {
   email: string;
@@ -16,9 +16,14 @@ function RegisterForm() {
     console.log(formData);
   };
   return (
-    <form className="bg-gray-500 rounded-md shadow-2xl p-16 flex flex-col justify-center">
-      <h1 className="text-white font-bold text-2xl mb-1">Please Register!</h1>
-      <hr className="w-full my-4" />
+    <form className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center z-10">
+      <h1 className="text-gray-800 font-bold text-2xl mb-1">
+        Please Register!
+      </h1>
+      <span className="w-full flex justify-between gap-2 items-center text-xs text-gray-500 font-semibold mt-1 mb-4">
+        <p className="whitespace-nowrap">Begin your journey today</p>
+        <hr className="w-full" />
+      </span>
       <div className="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl bg-white">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +53,7 @@ function RegisterForm() {
           }}
         />
       </div>
-      <div className="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl bg-white">
+      <div className="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl bg-white">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 text-gray-400"
@@ -96,21 +101,21 @@ function RegisterForm() {
           id="confirmPassword"
           placeholder="Confirm Password"
           onChange={(e) => {
-            console.log('password', formData.password)
+            console.log("password", formData.password);
             if (e.target.value !== formData.password) {
-              console.log("dont match")
+              console.log("dont match");
               e.target.setCustomValidity("Password don't match!");
             }
           }}
         />
       </div>
-      <PrimaryButton type="submit" onClick={doRegister} className="w-full mx-0">
+      <SecondaryButton type="submit" onClick={doRegister} className="w-full mx-0">
         Register
-      </PrimaryButton>
+      </SecondaryButton>
       <div className="flex justify-between mt-4">
         <a
           href="/login"
-          className="text-white text-sm ml-2 hover:text-purple-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"
+          className="text-gray-800 text-sm ml-2 hover:text-purple-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"
         >
           Already have an account?
         </a>

@@ -12,7 +12,7 @@ function PrimaryButton({
       disabled={disabled}
       onClick={onClick}
       type={type ?? "button"}
-      className={`flex justify-center items-center py-3 px-6 mx-2 bg-purple-500 text-white hover:bg-purple-700 text-sm text-center font-semibold rounded-full ${className}`}
+      className={`flex justify-center items-center py-3 px-6 sm:mx-2 bg-purple-500 text-white hover:bg-purple-700 text-sm text-center font-semibold rounded-full whitespace-nowrap ${className}`}
     >
       {children}
     </button>

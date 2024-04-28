@@ -9,9 +9,12 @@ function LoginForm() {
   };
 
   return (
-    <form className="bg-gray-500 rounded-md shadow-2xl p-16 flex flex-col justify-center">
-      <h1 className="text-white font-bold text-2xl mb-1">Hello Again!</h1>
-      <hr className="w-full my-4" />
+    <form className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center">
+      <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
+      <span className="w-full flex justify-between gap-2 items-center text-xs text-gray-500 font-semibold mt-1 mb-4">
+        <p className="whitespace-nowrap">Welcome back</p>
+        <hr className="w-full" />
+      </span>
       <div className="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl bg-white">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +77,7 @@ function LoginForm() {
       <div className="flex justify-between mt-4">
         <a
           href="/register"
-          className="text-white text-sm ml-2 hover:text-purple-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"
+          className="text-gray-800 text-sm ml-2 hover:text-purple-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"
         >
           Don't have an account yet?
         </a>

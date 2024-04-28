@@ -8,7 +8,7 @@ function PrimaryButton({
   children,
 }: ButtonProps) {
   return (
-    <button    
+    <button
       disabled={disabled}
       onClick={onClick}
       type={type ?? "button"}

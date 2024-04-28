@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import SecondaryButton from "../../../components/buttons/SecondaryButton";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebase.config";
+import Swal from "sweetalert2";
 
 type RegisterData = {
   email: string;
@@ -12,11 +15,38 @@ function RegisterForm() {
     password: "",
   });
 
-  const doRegister = () => {
+  const doRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log(formData);
+    e.preventDefault();
+
+    if (formData.email !== "" && formData.password !== "") {
+      try {
+        const response = await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        console.log("User created successfully:", response);
+        Swal.fire({
+          title: "Success!",
+          text: "Successfully Registered.",
+          icon: "success",
+          confirmButtonText: "Sure",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/";
+          }
+        });
+      } catch (error) {
+        console.error("Sign up error:", error);
+      }
+    }
   };
   return (
-    <form className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center z-10">
+    <form
+      onSubmit={doRegister}
+      className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center z-10"
+    >
       <h1 className="text-gray-800 font-bold text-2xl mb-1">
         Please Register!
       </h1>
@@ -101,15 +131,20 @@ function RegisterForm() {
           id="confirmPassword"
           placeholder="Confirm Password"
           onChange={(e) => {
-            console.log("password", formData.password);
             if (e.target.value !== formData.password) {
-              console.log("dont match");
               e.target.setCustomValidity("Password don't match!");
+            } else {
+              e.target.setCustomValidity("");
             }
           }}
         />
       </div>
-      <SecondaryButton type="submit" onClick={doRegister} className="w-full mx-0">
+      <SecondaryButton
+        type="submit"
+        // onClick={doRegister}
+        onClick={() => {}}
+        className="w-full mx-0"
+      >
         Register
       </SecondaryButton>
       <div className="flex justify-between mt-4">

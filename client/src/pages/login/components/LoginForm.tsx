@@ -1,11 +1,26 @@
 import React, { useState } from "react";
 import PrimaryButton from "../../../components/buttons/PrimaryButton";
+import { auth } from "../../../firebase.config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 function LoginForm() {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const doLogin = () => {
+  const doLogin = async () => {
     console.log(formData);
+    try {
+      const response = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      console.log("User logged in successfully:", response);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   return (

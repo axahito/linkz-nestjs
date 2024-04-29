@@ -6,9 +6,14 @@ import axios from "axios";
 
 function Header({ isAuth }: { isAuth: boolean }) {
   const doLogout = async () => {
-    const response = await axios.post("http://localhost:3080/auth/logout");
-
-    console.log(response);
+    try {
+      const response = await axios.post("http://localhost:3080/auth/logout");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      localStorage.clear();
+      window.location.href = "http://localhost:3000/login";
+    }
   };
   return (
     <header className="w-full h-[6rem] bg-white flex px-4 md:px-16 items-center">

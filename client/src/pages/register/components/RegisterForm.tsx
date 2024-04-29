@@ -3,6 +3,7 @@ import SecondaryButton from "../../../components/buttons/SecondaryButton";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase.config";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 type RegisterData = {
   email: string;
@@ -27,16 +28,20 @@ function RegisterForm() {
           formData.password
         );
         console.log("User created successfully:", response);
-        Swal.fire({
-          title: "Success!",
-          text: "Successfully Registered.",
-          icon: "success",
-          confirmButtonText: "Sure",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "/";
-          }
-        });
+
+        const config = {
+          headers: {
+            Authorization: `Bearer${await response.user.getIdToken()}`, // Include 'Bearer' prefix for JWT tokens
+          },
+        };
+
+        const user = await axios.post(
+          "http://localhost:3080/auth/login",
+          formData,
+          config
+        );
+
+        console.log("user response", user);
       } catch (error) {
         console.error("Sign up error:", error);
       }

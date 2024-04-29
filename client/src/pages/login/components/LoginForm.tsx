@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PrimaryButton from "../../../components/buttons/PrimaryButton";
 import { auth } from "../../../firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -9,22 +10,40 @@ function LoginForm() {
     password: "",
   });
 
-  const doLogin = async () => {
+  const doLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log(formData);
-    try {
-      const response = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      console.log("User logged in successfully:", response);
-    } catch (error) {
-      console.error("Login error:", error);
+    e.preventDefault();
+
+    if (formData.email !== "" && formData.password !== "") {
+      try {
+        const response = await signInWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        console.log("User logged in successfully:", response);
+
+        const config = {
+          headers: {
+            Authorization: `Bearer${await response.user.getIdToken()}`, // Include 'Bearer' prefix for JWT tokens
+          },
+        };
+
+        const user = await axios.post(
+          "http://localhost:3080/auth/login",
+          formData,
+          config
+        );
+
+        console.log("user response", user);
+      } catch (error) {
+        console.error("Login error:", error);
+      }
     }
   };
 
   return (
-    <form className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center">
+    <form onSubmit={doLogin} className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center">
       <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
       <span className="w-full flex justify-between gap-2 items-center text-xs text-gray-500 font-semibold mt-1 mb-4">
         <p className="whitespace-nowrap">Welcome back</p>
@@ -86,7 +105,7 @@ function LoginForm() {
           }}
         />
       </div>
-      <PrimaryButton type="submit" onClick={doLogin} className="w-full mx-0">
+      <PrimaryButton type="submit" onClick={() => {}} className="w-full mx-0">
         Login
       </PrimaryButton>
       <div className="flex justify-between mt-4">

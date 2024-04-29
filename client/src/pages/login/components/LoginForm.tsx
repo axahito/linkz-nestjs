@@ -36,6 +36,8 @@ function LoginForm() {
         );
 
         console.log("user response", user);
+        localStorage.setItem("session", JSON.stringify(user));
+        window.location.href = "http://localhost:3000/"
       } catch (error) {
         console.error("Login error:", error);
       }
@@ -43,7 +45,10 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={doLogin} className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center">
+    <form
+      onSubmit={doLogin}
+      className="bg-white rounded-md md:shadow-2xl p-6 md:p-16 flex flex-col justify-center"
+    >
       <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
       <span className="w-full flex justify-between gap-2 items-center text-xs text-gray-500 font-semibold mt-1 mb-4">
         <p className="whitespace-nowrap">Welcome back</p>

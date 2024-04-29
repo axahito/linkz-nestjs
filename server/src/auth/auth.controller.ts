@@ -47,12 +47,9 @@ export class AuthController {
   @Post('logout')
   async logout(@Req() req: Request, @Res() res: Response) {
     try {
+      this.logger.debug(req.cookies.session);
       await this.authService.revokeToken(req.cookies.session);
-      res.clearCookie('session');
-      return {
-        status: HttpStatus.OK,
-        body: null,
-      };
+      return res.clearCookie('session').status(HttpStatus.OK).json(null);
     } catch (error) {
       console.error('Logout error:', error);
       return res

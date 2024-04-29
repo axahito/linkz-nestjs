@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SecondaryButton from "../../../components/buttons/SecondaryButton";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase.config";
-import Swal from "sweetalert2";
 import axios from "axios";
 
 type RegisterData = {
@@ -42,6 +41,8 @@ function RegisterForm() {
         );
 
         console.log("user response", user);
+        localStorage.setItem("session", JSON.stringify(user));
+        window.location.href = "http://localhost:3000/"
       } catch (error) {
         console.error("Sign up error:", error);
       }
